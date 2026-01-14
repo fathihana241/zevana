@@ -9,6 +9,10 @@ use App\Models\User;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WatchController;
 use App\Http\Controllers\ProductController;
+use App\Livewire\AdminLogin;
+use App\Livewire\UserLogin;
+use App\Livewire\AdminDashboard;
+use App\Livewire\UserDashboard;
 
 Route::get('test', function () {
 
@@ -41,3 +45,22 @@ Route::get('test', function () {
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/watches', [ProductController::class, 'watches'])
     ->name('watches.shop');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+Route::get('/admin/login', AdminLogin::class)->name('admin.login');
+Route::get('/user/login', UserLogin::class)->name('user.login');
+Route::get('/admin/dashboard', AdminDashboard::class)
+    ->middleware('admin')
+    ->name('admin.dashboard');
+
+Route::get('/user/dashboard', UserDashboard::class)
+    ->middleware('user')
+    ->name('user.dashboard');
