@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zevana</title>
-
-    <!-- Bootstrap (keep only one) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Eyewear</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome (REQUIRED for icons) -->
     <link rel="stylesheet"
@@ -14,59 +13,69 @@
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4R7x3iZK4A3bKkKXg=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
-
-    <!-- Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-
 <body>
+   @include('layouts.header')
 
-@include('layouts.header')
-<!-- Watches Banner Section -->
-<section class="w-full flex justify-center items-center py-16 px-6 bg-[#f4f1ea]">
-    <div class="grid grid-cols-3 max-w-6xl w-full items-center gap-6">
 
-        <div class="overflow-hidden rounded-t-[150px] rounded-b-lg">
-            <img 
-                src="{{ asset('images/wa1.jpeg') }}" 
-                alt="Jewelry Collection" 
-                class="w-full h-full object-cover"
-            >
-        </div>
+<!-- Hero Section -->
+<section class="flex justify-center items-center min-h-screen">
+    <header
+        class="flex flex-wrap justify-between items-center w-full px-6 py-10
+               bg-gradient-to-br from-gray-100 via-gray-100 to-teal-100 min-h-screen">
 
-        <div class="flex flex-col items-center text-center px-6">
-            <p class="uppercase tracking-wide text-sm text-gray-600">
-                Now In Store
+        <!-- Left Content -->
+        <div class="flex-1 pl-10">
+            <h1 class="text-4xl font-bold text-[#f4a261] mb-5 animate-fadeIn">
+                Shop Stylish Eyewear Online
+            </h1>
+
+            <p class="text-lg text-black max-w-md animate-fadeInSlide">
+                Discover our wide collection of trendy glasses and sunglasses.
+                Order online and enjoy fast delivery of premium-quality eyewear
+                that suits your style and enhances your vision.
             </p>
-
-            <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mt-2 leading-snug">
-                Luxury <br> Watch <br> Collection
-            </h2>
-
-            <a href="{{ route('watches.shop') }}"
-               class="mt-6 bg-[#b49b79] text-white px-6 py-2 text-sm uppercase tracking-wide rounded shadow-md hover:bg-[#a38968] transition">
-                Shop Watches
-            </a>
         </div>
 
-        <div class="overflow-hidden rounded-lg">
-            <img 
-                src="{{ asset('images/wa2.jpeg') }}" 
-                alt="Model wearing jewelry" 
-                class="w-full h-full object-cover"
-            >
-        </div>
+        <!-- Right Images -->
+        <div class="flex gap-6 pr-10">
+            <div class="w-[200px] perspective">
+                <div
+                    class="w-full h-[500px] rounded-lg shadow-md overflow-hidden
+                           bg-cover bg-center transform transition duration-500
+                           hover:-translate-y-2 hover:scale-105 hover:shadow-2xl"
+                    style="background-image: url('{{ asset('images/eye1.jpeg') }}');">
+                </div>
+            </div>
 
-    </div>
+            <div class="w-[200px] perspective">
+                <div
+                    class="w-full h-[450px] rounded-lg shadow-md overflow-hidden
+                           bg-cover bg-center transform transition duration-500
+                           hover:-translate-y-2 hover:scale-105 hover:shadow-2xl"
+                    style="background-image: url('{{ asset('images/eye2.jpeg') }}');">
+                </div>
+            </div>
+
+            <div class="w-[200px] perspective">
+                <div
+                    class="w-full h-[400px] rounded-lg shadow-md overflow-hidden
+                           bg-cover bg-center transform transition duration-500
+                           hover:-translate-y-2 hover:scale-105 hover:shadow-2xl"
+                    style="background-image: url('{{ asset('images/eye3.jpeg') }}');">
+                </div>
+            </div>
+        </div>
+    </header>
 </section>
+
 <!-- Products Section -->
 <section class="max-w-6xl mx-auto px-6 py-16">
 
   <h2 class="text-3xl font-bold mb-10 tracking-wide text-center">
     OUR PRODUCTS
   </h2>
-
-  <!-- Product Grid -->
+ <!-- Product Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
     @if($products->count() > 0)
@@ -107,7 +116,8 @@
             <p class="text-gray-600 text-sm mt-1">
               Step back into timeless fashion with durable quality.
             </p>
- <div class="flex items-center justify-between mt-4">
+
+    <div class="flex items-center justify-between mt-4">
                     <span class="text-lg font-semibold">Rs. {{ number_format($product->price, 2) }}</span>
 
                     <form method="POST" action="{{ route('checkout') }}" class="inline-block">
@@ -141,6 +151,7 @@
 
 </section>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

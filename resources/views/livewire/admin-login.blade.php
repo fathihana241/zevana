@@ -1,29 +1,34 @@
-<?php
-namespace App\Livewire;
+<div class="max-w-md mx-auto mt-24 p-6 bg-white shadow rounded">
 
-use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
+    <h2 class="text-2xl font-bold text-center mb-6">
+        Admin Login
+    </h2>
 
-class AdminLogin extends Component
-{
-    public $email;
-    public $password;
+    @if (session()->has('error'))
+        <p class="text-red-500 text-sm mb-4">
+            {{ session('error') }}
+        </p>
+    @endif
 
-    public function login()
-    {
-        if (Auth::attempt([
-            'email' => $this->email,
-            'password' => $this->password,
-            'user_type' => 'admin'
-        ])) {
-            return redirect()->route('admin.dashboard');
-        }
+    <form wire:submit.prevent="login">
 
-        session()->flash('error', 'Invalid admin credentials');
-    }
+        <div class="mb-4">
+            <label>Email</label>
+            <input type="email" wire:model="email"
+                   class="w-full border px-3 py-2 rounded">
+            @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
 
-    public function render()
-    {
-        return view('livewire.admin-login');
-    }
-}
+        <div class="mb-4">
+            <label>Password</label>
+            <input type="password" wire:model="password"
+                   class="w-full border px-3 py-2 rounded">
+            @error('password') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <button class="w-full bg-black text-white py-2 rounded">
+            Login as Admin
+        </button>
+
+    </form>
+</div>

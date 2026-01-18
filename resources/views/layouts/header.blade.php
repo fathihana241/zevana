@@ -13,27 +13,8 @@
 </head>
 <body>
 @php
-    
-    $active = "relative text-sm
-               text-[#f4a261]
-               no-underline
-               visited:text-[#f4a261]
-               hover:text-[#f4a261]
-               active:text-[#f4a261]
-               focus:text-[#f4a261]
-               focus:outline-none focus:ring-0
-               after:content-[''] after:absolute after:left-0 after:-bottom-1
-               after:w-full after:h-0.5 after:bg-[#f4a261]";
-
-    /* Inactive link: white text, NO underline, NO blue ever */
-    $inactive = "text-sm
-                 text-white
-                 no-underline
-                 visited:text-white
-                 hover:text-[#f4a261]
-                 active:text-white
-                 focus:text-white
-                 focus:outline-none focus:ring-0";
+    $active = "relative text-sm text-[#f4a261] no-underline visited:text-[#f4a261] hover:text-[#f4a261] active:text-[#f4a261] focus:text-[#f4a261] focus:outline-none focus:ring-0 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-[#f4a261]";
+    $inactive = "text-sm text-white no-underline visited:text-white hover:text-[#f4a261] active:text-white focus:text-white focus:outline-none focus:ring-0";
 @endphp
 
 <!-- Header -->
@@ -58,9 +39,26 @@
 
         <!-- Desktop Icons -->
         <div class="hidden md:flex items-center space-x-5 text-lg">
+
             <a href="{{ url('/wishlist') }}"><i class="fa-regular fa-heart text-[#f4a261] hover:opacity-80"></i></a>
-            <a href="{{ url('/dashboard') }}"><i class="fa-regular fa-user text-[#f4a261] hover:opacity-80"></i></a>
+
+            <!-- User Icon -->
+             <a href="{{ url('/register') }}">
+    <i class="fa-regular fa-user text-[#f4a261] hover:opacity-80"></i>
+</a>
+
+ 
+
             <a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart text-[#f4a261] hover:opacity-80"></i></a>
+
+            <!-- Logout -->
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-sm text-white hover:text-[#f4a261]">Logout</button>
+                </form>
+            @endauth
+
         </div>
 
         <!-- Mobile Menu Button -->
@@ -93,22 +91,34 @@
         <!-- Mobile Links -->
         <nav class="flex flex-col space-y-5">
             <a href="{{ url('/') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">HOME</a>
-            <a href="{{ url('/watches') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">WATCH</a>
-            <a href="{{ url('/eyewear') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">EYEWEAR</a>
-            <a href="{{ url('/jewelry') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">JEWELRY</a>
-            <a href="{{ url('/accessories') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">ACCESSORIES</a>
-            <a href="{{ url('/fragrance') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">FRAGRANCE</a>
-            <a href="{{ url('/skincare') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">SKINCARE</a>
-            <a href="{{ url('/about') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">ABOUT US</a>
-            <a href="{{ url('/contact') }}" class="text-[#f4a261] hover:text-[#f4a261] visited:text-[#f4a261] focus:text-[#f4a261] active:text-[#f4a261] no-underline">CONTACT</a>
+            <a href="{{ url('/watches') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">WATCH</a>
+            <a href="{{ url('/eyewear') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">EYEWEAR</a>
+            <a href="{{ url('/jewelry') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">JEWELRY</a>
+            <a href="{{ url('/accessories') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">ACCESSORIES</a>
+            <a href="{{ url('/fragrance') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">FRAGRANCE</a>
+            <a href="{{ url('/skincare') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">SKINCARE</a>
+            <a href="{{ url('/about') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">ABOUT US</a>
+            <a href="{{ url('/contact') }}" class="text-[#f4a261] hover:text-[#f4a261] no-underline">CONTACT</a>
         </nav>
 
         <!-- Mobile Icons -->
         <div class="flex space-x-6 pt-8 text-xl">
             <a href="{{ url('/wishlist') }}"><i class="fa-regular fa-heart text-[#f4a261] hover:opacity-80"></i></a>
-            <a href="{{ url('/dashboard') }}"><i class="fa-regular fa-user text-[#f4a261] hover:opacity-80"></i></a>
+
+            <!-- Mobile User Icon -->
+           
+
             <a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart text-[#f4a261] hover:opacity-80"></i></a>
         </div>
+
+        <!-- Mobile Logout -->
+        @auth
+            <form method="POST" action="{{ route('logout') }}" class="pt-4">
+                @csrf
+                <button type="submit" class="text-white hover:text-[#f4a261]">Logout</button>
+            </form>
+        @endauth
+
     </div>
 
 </header>

@@ -11,8 +11,13 @@ use App\Http\Controllers\WatchController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\AdminLogin;
 use App\Livewire\UserLogin;
-use App\Livewire\AdminDashboard;
+use App\Livewire\RegisterUser;
 use App\Livewire\UserDashboard;
+use App\Livewire\AdminDashboard;
+use App\Livewire\LoginUser;
+
+
+
 
 Route::get('test', function () {
 
@@ -46,21 +51,42 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/watches', [ProductController::class, 'watches'])
     ->name('watches.shop');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-Route::get('/admin/login', AdminLogin::class)->name('admin.login');
-Route::get('/user/login', UserLogin::class)->name('user.login');
-Route::get('/admin/dashboard', AdminDashboard::class)
-    ->middleware('admin')
-    ->name('admin.dashboard');
 
-Route::get('/user/dashboard', UserDashboard::class)
-    ->middleware('user')
-    ->name('user.dashboard');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/register', RegisterUser::class)->name('register');
+});
+
+Route::middleware('guest')->get('/login', LoginUser::class)->name('login');
+
+Route::middleware('auth')->get('/admin', function () {
+    return 'Admin Logged In';
+});
+
+Route::middleware('auth')->get('/user', function () {
+    return 'User Logged In';
+});
+Route::get('/eyewear', [ProductController::class, 'eyewear'])
+    ->name('eyewear.shop');
+Route::get('/jewelry', [ProductController::class, 'jewelry'])->name('jewelry.shop');
+
+Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
+Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
+
+Route::post('/checkout', function () {
+    return 'Checkout page';
+})->name('checkout');
+
+Route::post('/wishlist/add', function () {
+    return 'Wishlist working';
+})->name('wishlist.add');
+
+
+Route::get('/accessories', [ProductController::class, 'accessories'])
+    ->name('accessories.shop');
+
+Route::get('/fragrance', [ProductController::class, 'fragrance'])
+    ->name('fragrance.shop');
+
+Route::get('/skincare', [ProductController::class, 'skincare'])
+    ->name('skincare.shop');
