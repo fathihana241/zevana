@@ -37,16 +37,6 @@
                     class="w-full mt-1 border rounded-lg px-3 py-2">
             </div>
 
-            <!-- Role -->
-            <div>
-                <label class="block text-sm font-medium">Register As</label>
-                <select wire:model="user_type"
-                    class="w-full mt-1 border rounded-lg px-3 py-2">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-
             <!-- Submit -->
             <button type="submit"
                 class="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">

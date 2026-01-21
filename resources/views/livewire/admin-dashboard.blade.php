@@ -1,3 +1,10 @@
-<div class="p-8">
-    <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+
+<div class="p-10">
+    <h1 class="text-3xl font-bold text-red-600">
+        Admin Dashboard
+    </h1>
+
+    <p class="mt-4">
+        Welcome Admin 👑
+    </p>
 </div>

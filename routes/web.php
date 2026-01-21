@@ -9,11 +9,10 @@ use App\Models\User;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WatchController;
 use App\Http\Controllers\ProductController;
-use App\Livewire\AdminLogin;
-use App\Livewire\UserLogin;
-use App\Livewire\RegisterUser;
-use App\Livewire\UserDashboard;
 use App\Livewire\AdminDashboard;
+use App\Livewire\UserDashboard;
+use App\Livewire\RegisterUser;
+
 use App\Livewire\LoginUser;
 
 
@@ -46,26 +45,46 @@ Route::get('test', function () {
     // return $user->reviews;
 
 });
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->get('/dashboard', function () {
+
+    $user = auth()->user();
+
+    if ($user->user_type === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('user.dashboard');
+
+})->name('dashboard');
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/watches', [ProductController::class, 'watches'])
     ->name('watches.shop');
 
 
-
 Route::middleware('guest')->group(function () {
     Route::get('/register', RegisterUser::class)->name('register');
+    Route::get('/login', LoginUser::class)->name('login');
 });
 
-Route::middleware('guest')->get('/login', LoginUser::class)->name('login');
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 
-Route::middleware('auth')->get('/admin', function () {
-    return 'Admin Logged In';
+    Route::get('/admin', AdminDashboard::class)
+        ->name('admin.dashboard');
+
+    Route::get('/user', UserDashboard::class)
+        ->name('user.dashboard');
 });
 
-Route::middleware('auth')->get('/user', function () {
-    return 'User Logged In';
-});
 Route::get('/eyewear', [ProductController::class, 'eyewear'])
     ->name('eyewear.shop');
 Route::get('/jewelry', [ProductController::class, 'jewelry'])->name('jewelry.shop');
@@ -90,3 +109,6 @@ Route::get('/fragrance', [ProductController::class, 'fragrance'])
 
 Route::get('/skincare', [ProductController::class, 'skincare'])
     ->name('skincare.shop');
+
+
+    

@@ -13,32 +13,26 @@ class RegisterUser extends Component
     public $email;
     public $password;
     public $password_confirmation;
-    public $user_type = 'user'; // default
 
     protected $rules = [
         'name' => 'required|string|min:3',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|min:8|confirmed',
-        'user_type' => 'required|in:admin,user',
     ];
 
     public function register()
     {
         $this->validate();
 
+        // Force role to 'user'
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'user_type' => $this->user_type,
+            'user_type' => 'user',
         ]);
 
         Auth::login($user);
-
-        // Redirect based on role
-        if ($user->user_type === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
 
         return redirect()->route('user.dashboard');
     }
