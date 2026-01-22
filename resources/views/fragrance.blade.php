@@ -86,12 +86,13 @@
                             RS. {{ number_format($product->price, 2) }}
                         </span>
 
-                        <button type="button"
-                                class="w-12 h-12 flex items-center justify-center rounded-full 
-                                       bg-black text-white shadow-lg 
-                                       hover:bg-gray-800 hover:scale-110 transition-all duration-300">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </button>
+                        <form method="GET" action="{{ route('checkout') }}">
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <button type="submit"
+            class="px-4 py-2 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition flex items-center gap-1 hover:scale-105 transform duration-300">
+        Buy Now <i class="fa fa-arrow-right"></i>
+    </button>
+</form>
                     </div>
 
                     <!-- Wishlist -->

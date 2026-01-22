@@ -109,18 +109,14 @@
             </p>
  <div class="flex items-center justify-between mt-4">
                     <span class="text-lg font-semibold">Rs. {{ number_format($product->price, 2) }}</span>
+<form method="GET" action="{{ route('checkout') }}">
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <button type="submit"
+            class="px-4 py-2 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition flex items-center gap-1 hover:scale-105 transform duration-300">
+        Buy Now <i class="fa fa-arrow-right"></i>
+    </button>
+</form>
 
-                    <form method="POST" action="{{ route('checkout') }}" class="inline-block">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="category" value="jewelry">
-                        <button type="submit" 
-                                class="px-4 py-2 bg-black text-white rounded-full text-sm 
-                                       hover:bg-gray-800 transition flex items-center gap-1 
-                                       hover:scale-105 transform duration-300">
-                            Buy Now <i class="fa fa-arrow-right"></i>
-                        </button>
-                    </form>
                 </div>
 
 

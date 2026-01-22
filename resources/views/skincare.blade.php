@@ -94,9 +94,13 @@
 
                             <div class="flex items-center space-x-2">
                                 {{-- Buy Now --}}
-                                <button type="button" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">
-                                    Buy {{ ucfirst($key) }} →
-                                </button>
+                               <form method="GET" action="{{ route('checkout') }}">
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <button type="submit"
+            class="px-4 py-2 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition flex items-center gap-1 hover:scale-105 transform duration-300">
+        Buy Now <i class="fa fa-arrow-right"></i>
+    </button>
+</form>
 
                                 {{-- Wishlist --}}
                                 <button type="button" class="p-2 rounded-full hover:bg-gray-100 transition">

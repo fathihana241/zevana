@@ -106,10 +106,15 @@
             <a href="{{ url('/wishlist') }}"><i class="fa-regular fa-heart text-[#f4a261] hover:opacity-80"></i></a>
 
             <!-- Mobile User Icon -->
-           
+             <!-- User Icon -->
+             <a href="{{ url('/register') }}">
+    <i class="fa-regular fa-user text-[#f4a261] hover:opacity-80"></i>
+</a>
 
-            <a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart text-[#f4a261] hover:opacity-80"></i></a>
-        </div>
+
+     <a href="{{ route('cart') }}">
+    <i class="fa fa-shopping-cart text-[#f4a261] hover:opacity-80"></i>
+</a>
 
         <!-- Mobile Logout -->
         @auth

@@ -102,9 +102,9 @@ class ProductController extends Controller
         // map category name to child_id
         $categoryMap = [
             'necklace' => 10,
-            'earrings' => 11,
-            'bracelet' => 12,
-            'rings' => 13,
+            'earrings' => 12,
+            'bracelet' => 13,
+            'rings' => 11,
         ];
 
         if (isset($categoryMap[$childCategory])) {
@@ -163,4 +163,5 @@ public function fragrance()
 
     return view('skincare', compact('productsByCategory'));
 }
+
 }

@@ -12,9 +12,10 @@ use App\Http\Controllers\ProductController;
 use App\Livewire\AdminDashboard;
 use App\Livewire\UserDashboard;
 use App\Livewire\RegisterUser;
-
+use App\Http\Controllers\CheckoutController;
 use App\Livewire\LoginUser;
-
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminProductController;
 
 
 
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin', AdminDashboard::class)
         ->name('admin.dashboard');
+        
 
     Route::get('/user', UserDashboard::class)
         ->name('user.dashboard');
@@ -92,9 +94,7 @@ Route::get('/jewelry', [ProductController::class, 'jewelry'])->name('jewelry.sho
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
 Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
 
-Route::post('/checkout', function () {
-    return 'Checkout page';
-})->name('checkout');
+
 
 Route::post('/wishlist/add', function () {
     return 'Wishlist working';
@@ -110,5 +110,32 @@ Route::get('/fragrance', [ProductController::class, 'fragrance'])
 Route::get('/skincare', [ProductController::class, 'skincare'])
     ->name('skincare.shop');
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
+     
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [OrderController::class, 'index'])
+        ->name('cart');
+});
+
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+
+    // Admin dashboard
+    Route::get('/dashboard', [AdminProductController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Admin Product CRUD
+    Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/products/store', [AdminProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/products/{id}/edit', [AdminProductController::class, 'edit'])->name('admin.products.edit');
+    Route::post('/products/{id}/update', [AdminProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/products/{id}/delete', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+});
