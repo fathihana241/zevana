@@ -15,7 +15,7 @@ use App\Livewire\RegisterUser;
 use App\Http\Controllers\CheckoutController;
 use App\Livewire\LoginUser;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\AdminProductController;
+
 
 
 
@@ -46,6 +46,8 @@ Route::get('test', function () {
     // return $user->reviews;
 
 });
+
+// route for admin and iuser dashboard 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -110,6 +112,7 @@ Route::get('/fragrance', [ProductController::class, 'fragrance'])
 Route::get('/skincare', [ProductController::class, 'skincare'])
     ->name('skincare.shop');
 
+    // welcome page route 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
@@ -126,16 +129,30 @@ Route::middleware('auth')->group(function () {
         ->name('cart');
 });
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
 
-    // Admin dashboard
-    Route::get('/dashboard', [AdminProductController::class, 'dashboard'])->name('admin.dashboard');
+// admin route
+Route::get('/admin/dashboard', function () {
+    $categories = Category::all(); // pass categories to Blade
+    return view('admin.dashboard', compact('categories'));
+})->name('admin.dashboard.api');
 
-    // Admin Product CRUD
-    Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
-    Route::get('/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
-    Route::post('/products/store', [AdminProductController::class, 'store'])->name('admin.products.store');
-    Route::get('/products/{id}/edit', [AdminProductController::class, 'edit'])->name('admin.products.edit');
-    Route::post('/products/{id}/update', [AdminProductController::class, 'update'])->name('admin.products.update');
-    Route::delete('/products/{id}/delete', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+
+// orders view for admin
+Route::get('/orders', [OrderController::class, 'adminOrders'])->name('admin.orders');
+
+// Delete order
+Route::delete('/orders/{order}', [OrderController::class, 'destroyOrder'])->name('admin.orders.destroy');
+
+// user view for admin
+Route::get('/users', function () {
+    $users = User::orderBy('created_at', 'desc')->get();
+    return view('users', compact('users'));
+})->name('admin.users');
+
+Route::get('/about', function () {
+    return view('about');
 });
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');

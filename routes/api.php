@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\ProductApiController;
 
 
 
@@ -33,4 +34,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('tags', TagController::class);
     Route::apiResource('users', UserController::class);
+});
+
+
+// ---------------------------
+Route::middleware('auth:sanctum')->group(function () {
+
+    // PRODUCT CRUD
+    Route::get('/products', [ProductApiController::class, 'index']);       // List all products
+    Route::get('/products/{id}', [ProductApiController::class, 'show']);   // Show single product
+    Route::post('/products', [ProductApiController::class, 'store']);      // Add new product
+    Route::post('/products/{id}', [ProductApiController::class, 'update']); // Update product
+    Route::delete('/products/{id}', [ProductApiController::class, 'destroy']); // Delete product
+
+Route::get('/categories/{id}/children', function ($id) {
+    return \App\Models\Category::where('parent_id', $id)->get();
+});
+
 });

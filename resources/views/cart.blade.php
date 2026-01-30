@@ -118,5 +118,5 @@
         @endif
 
     </div>
-
+@include('layouts.footer')
 </x-app-layout>

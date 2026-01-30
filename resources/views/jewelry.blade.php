@@ -128,6 +128,6 @@
   animation: bounceSlow 2s infinite;
 }
 </style>
-
+@include('layouts.footer')
 </body>
 </html>

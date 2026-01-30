@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 .animate-slideIn { animation: slideIn 0.7s ease-in-out; }
 .animate-bounce-slow { animation: bounceSlow 2s infinite; }
 </style>
-
+@include('layouts.footer')
 
 </body>
 </html>

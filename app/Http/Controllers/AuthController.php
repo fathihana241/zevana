@@ -9,33 +9,41 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Register User
+    // Register User / Admin
     public function register(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            'role'     => 'nullable|in:user,admin'
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:6|confirmed',
+            'user_type' => 'nullable|in:user,admin', // validate user_type
         ]);
 
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'role'     => $request->role ?? 'user',
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'user_type' => $request->user_type ?? 'user', // save admin or user
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'message' => 'User registered successfully',
-            'user'    => $user,
+            'user'    => [
+                'id'        => $user->id,
+                'name'      => $user->name,
+                'email'     => $user->email,
+                'user_type' => $user->user_type, // ✅ include user_type in response
+                'created_at'=> $user->created_at,
+                'updated_at'=> $user->updated_at,
+                'profile_photo_url' => $user->profile_photo_url
+            ],
             'token'   => $token
         ], 201);
     }
 
-    // Login User
+    // Login User / Admin
     public function login(Request $request)
     {
         $request->validate([
@@ -53,12 +61,20 @@ class AuthController extends Controller
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'user'  => $user,
+            'user' => [
+                'id'        => $user->id,
+                'name'      => $user->name,
+                'email'     => $user->email,
+                'user_type' => $user->user_type, // ✅ include user_type
+                'profile_photo_url' => $user->profile_photo_url,
+                'created_at'=> $user->created_at,
+                'updated_at'=> $user->updated_at
+            ],
             'token' => $token
         ], 200);
     }
 
-    //Logout User
+    // Logout
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

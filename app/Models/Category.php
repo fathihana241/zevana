@@ -31,5 +31,14 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function hasChildren()
+{
+    return $this->children()->exists();
+}
+
+public function isMain()
+{
+    return $this->parent_id === null;
+}
 
 }

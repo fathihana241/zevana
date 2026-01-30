@@ -123,5 +123,6 @@
             if (firstGallery) showGallery(firstGallery);
         });
     </script>
+    @include('layouts.footer')
 </body>
 </html>
