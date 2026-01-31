@@ -1,5 +1,5 @@
 <x-guest-layout>
- <!-- Header -->
+    <!-- Header -->
     <header class="sticky top-0 z-50">
         <div class="flex justify-center items-center bg-[#0d1b2a] px-8 py-2">
             <div class="flex items-center h-16">
@@ -11,6 +11,7 @@
             </div>
         </div>
     </header>
+
     <div class="flex flex-col items-center justify-center min-h-screen px-6">
 
         <!-- Title -->
@@ -22,7 +23,7 @@
         <div class="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl">
 
             <!-- Left: Form -->
-            <div class="w-full md:w-1/2 bg-white p-6">
+            <div class="w-full md:w-1/2 bg-white p-6 rounded-lg">
                 <form wire:submit.prevent="login" class="bg-white p-6 rounded-lg">
 
                     <!-- Email -->
@@ -49,6 +50,14 @@
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
 
+                    <!-- Forgot Password -->
+                    <div class="text-right mt-2">
+                        <a href="{{ route('password.request') }}"
+                           class="text-orange-500 text-sm font-semibold hover:underline">
+                            Forgot your password?
+                        </a>
+                    </div>
+
                     <!-- Button -->
                     <button type="submit"
                             class="mt-6 bg-[#c96833] hover:bg-[#a55328]
@@ -69,11 +78,34 @@
             </div>
 
             <!-- Right: Image -->
-             <div class="hidden md:flex w-full md:w-1/2 items-center justify-center bg-gray-50">
-            <img src="{{ asset('images/11.jpeg') }}" alt="Signup Illustration" class="max-w-md">
-        </div>
+            <div class="hidden md:flex w-full md:w-1/2 items-center justify-center bg-gray-50">
+                <img src="{{ asset('images/11.jpeg') }}" alt="Signup Illustration" class="max-w-md">
+            </div>
 
         </div>
     </div>
+
+    <!-- Toast Notification for Login Error -->
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Simple toast notification
+                const toast = document.createElement('div');
+                toast.innerText = "{{ session('error') }}";
+                toast.className = "fixed top-5 right-5 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-slide-in";
+                document.body.appendChild(toast);
+
+                // Remove after 3 seconds
+                setTimeout(() => { toast.remove(); }, 3000);
+            });
+        </script>
+        <style>
+            @keyframes slide-in {
+                0% { opacity: 0; transform: translateX(100%); }
+                100% { opacity: 1; transform: translateX(0); }
+            }
+            .animate-slide-in { animation: slide-in 0.5s ease forwards; }
+        </style>
+    @endif
 
 </x-guest-layout>

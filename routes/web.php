@@ -15,7 +15,7 @@ use App\Livewire\RegisterUser;
 use App\Http\Controllers\CheckoutController;
 use App\Livewire\LoginUser;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\WishlistController;
 
 
 
@@ -156,3 +156,15 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::middleware('auth')->group(function () {
+
+    Route::post('/wishlist/add', [WishlistController::class, 'store'])
+        ->name('wishlist.store');
+
+    Route::get('/wishlist', [WishlistController::class, 'index'])
+        ->name('wishlist.index');
+
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])
+        ->name('wishlist.destroy');
+});

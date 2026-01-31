@@ -88,15 +88,18 @@
 </form>
                 </div>
 
-                <!-- Wishlist -->
-                <form method="POST" action="{{ route('wishlist.add') }}" class="mt-3">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <input type="hidden" name="category" value="jewelry">
-                    <button type="submit" class="transition-transform duration-300 hover:scale-125">
-                        <i class="fa-regular fa-star text-gray-400 hover:text-yellow-400 text-xl transition-colors duration-300"></i>
-                    </button>
-                </form>
+                <form action="{{ route('wishlist.store') }}" method="POST">
+    @csrf
+
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="category" value="products">
+    <input type="hidden" name="subcategory" value="">
+
+    <button type="submit"
+            class="mt-4 text-gray-400 hover:text-yellow-500 transition">
+        <i class="fa-regular fa-star text-lg"></i>
+    </button>
+</form>
             </div>
         </div>
     @empty

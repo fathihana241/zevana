@@ -95,10 +95,18 @@
 </form>
                     </div>
 
-                    <!-- Wishlist -->
-                    <button type="button" class="mt-4 text-gray-400 hover:text-yellow-500 transition">
-                        <i class="fa-regular fa-star text-lg"></i>
-                    </button>
+                    <form action="{{ route('wishlist.store') }}" method="POST">
+    @csrf
+
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="category" value="products">
+    <input type="hidden" name="subcategory" value="">
+
+    <button type="submit"
+            class="mt-4 text-gray-400 hover:text-yellow-500 transition">
+        <i class="fa-regular fa-star text-lg"></i>
+    </button>
+</form>
                 </div>
 
             </div>

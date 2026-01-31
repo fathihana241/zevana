@@ -40,7 +40,10 @@
         <!-- Desktop Icons -->
         <div class="hidden md:flex items-center space-x-5 text-lg">
 
-            <a href="{{ url('/wishlist') }}"><i class="fa-regular fa-heart text-[#f4a261] hover:opacity-80"></i></a>
+           <a href="{{ route('wishlist.index') }}">
+    <i class="fa-regular fa-heart text-[#f4a261] hover:opacity-80"></i>
+</a>
+
 
             <!-- User Icon -->
              <a href="{{ url('/register') }}">

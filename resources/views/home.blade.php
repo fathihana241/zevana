@@ -55,32 +55,62 @@
   </div>
 </section>
 
-<!-- Products -->
-<div class="container my-5">
-    <h3 class="mb-4">Latest Products</h3>
+<!-- New Arrivals Section -->
+<section class="py-12">
+    <h2 class="text-center text-2xl md:text-3xl font-bold text-black mb-6 leading-snug">
+        New Arrivals
+    </h2>
 
-    <div class="row">
-        @foreach($products as $product)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm">
+    <div class="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
 
-                    @if($product->image)
-                        <img src="{{ asset($product->image) }}" class="card-img-top" style="height:200px; object-fit:cover;">
-                    @else
-                        <img src="https://via.placeholder.com/300x200" class="card-img-top">
-                    @endif
+        @forelse($products as $product)
+            <div class="bg-white w-72 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition relative">
 
-                    <div class="card-body">
-                        <h6 class="card-title">{{ $product->name }}</h6>
-                        <p class="text-muted">Rs. {{ number_format($product->price, 2) }}</p>
-                        <span class="badge bg-success">In Stock: {{ $product->stock }}</span>
+                <!-- Badge -->
+                <span class="absolute top-3 left-3 bg-amber-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
+                    NEW
+                </span>
+
+                <!-- Product Image -->
+                @if($product->image)
+                    <img src="{{ asset($product->image) }}"
+                         alt="{{ $product->name }}"
+                         class="w-full h-56 object-cover">
+                @else
+                    <img src="https://via.placeholder.com/300x200"
+                         class="w-full h-56 object-cover">
+                @endif
+
+                <!-- Product Details -->
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        {{ $product->name }}
+                    </h3>
+
+                    <p class="text-gray-500 text-sm mt-1">
+                        Step into style with premium quality.
+                    </p>
+
+                    <!-- Price and Button -->
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-lg font-bold text-gray-800">
+                            Rs. {{ number_format($product->price, 2) }}
+                        </span>
+
+                        <a href="{{ route('checkout', $product->id) }}"
+                           class="bg-black text-white px-4 py-2 text-sm rounded-full hover:bg-gray-800 transition">
+                            Buy Now →
+                        </a>
                     </div>
-
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="text-gray-500">No products found.</p>
+        @endforelse
+
     </div>
-</div>
+</section>
+
 
 <section class="bg-white text-white py-16 px-6 md:px-12">
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
