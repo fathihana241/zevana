@@ -101,29 +101,43 @@
 
     </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-new Chart(document.getElementById('revenueChart'), {
-    type: 'line',
-    data: {
-        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-        datasets: [{
-            data: [12000,14000,15000,17000,18000,20000,22000,23000,24000,25000,27000,29000],
-            borderColor: '#6366f1',
-            tension: 0.4,
-            fill: true
-        }]
-    }
-});
+document.addEventListener('DOMContentLoaded', function () {
 
-new Chart(document.getElementById('categoryChart'), {
-    type: 'doughnut',
-    data: {
-        labels: ['Jewelry','Skin Care','Watch','Fragrance'],
-        datasets: [{
-            data: [40,25,20,15],
-            backgroundColor: ['#6366f1','#f97316','#facc15','#38bdf8']
-        }]
+    const revenueCtx = document.getElementById('revenueChart');
+    const categoryCtx = document.getElementById('categoryChart');
+
+    if (revenueCtx) {
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [12000,14000,15000,17000,18000,20000,22000,23000,24000,25000,27000,29000],
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99,102,241,0.2)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            }
+        });
     }
+
+    if (categoryCtx) {
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Jewelry','Skin Care','Watch','Fragrance'],
+                datasets: [{
+                    data: [40,25,20,15],
+                    backgroundColor: ['#6366f1','#f97316','#facc15','#38bdf8']
+                }]
+            }
+        });
+    }
+
 });
 </script>
