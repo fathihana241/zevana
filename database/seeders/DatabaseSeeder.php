@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'customer',
         ]);
 
-      
+
         
 }
 }
