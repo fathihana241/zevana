@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    // 1️⃣ Create new product
+    // 1️ Create new product
     public function store(Request $request)
     {
         $request->validate([
@@ -41,7 +41,7 @@ class ProductController extends Controller
         ], 201);
     }
 
-    // 2️⃣ Update existing product (Postman-friendly)
+    // 2️ Update existing product (Postman-friendly)
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -74,7 +74,7 @@ class ProductController extends Controller
         ]);
     }
 
-    // 3️⃣ Watches page
+    // 3 Watches page
     public function watches()
     {
         $products = Product::where('category_id', 1)->get(); // Watches
@@ -82,7 +82,7 @@ class ProductController extends Controller
         return view('watches', compact('products', 'category'));
     }
 
-    // 4️⃣ Eyewear page
+    // 4️ Eyewear page
     public function eyewear()
     {
         $products = Product::where('category_id', 6)->get(); // Eyewear
